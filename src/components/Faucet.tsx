@@ -10,20 +10,24 @@ import {
 import { Button } from "@/components/ui/button";
 import { useWallet } from "@/hooks/useWallet";
 import { ArrowRight, Droplet, Loader2 } from "lucide-react";
-import { LAMPORTS_PER_SOL } from "@solana/web3.js";
+import { Connection, LAMPORTS_PER_SOL, clusterApiUrl } from "@solana/web3.js";
 import { getExplorerUrl } from "@/lib/solana";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 
 export default function Faucet() {
-  const { publicKey, connected, connection, network, refreshBalance } =
-    useWallet();
-
+  const { publicKey, connected, network, refreshBalance } = useWallet();
   const [loading, setLoading] = useState(false);
   const [cooldown, setCooldown] = useState(false);
   const [cooldownTime, setCooldownTime] = useState(0);
 
-  // Request airdrop from faucet
+  // Create a new connection for the faucet
+  const connection = new Connection(
+    clusterApiUrl(network === "devnet" ? "devnet" : "testnet"),
+    "confirmed"
+  );
+
+  // Properly request airdrop
   const requestAirdrop = async () => {
     if (!connected || !publicKey) {
       toast.error("Not Connected", {
@@ -38,11 +42,19 @@ export default function Faucet() {
       // Fixed amount for devnet/testnet - 1 SOL
       const lamports = 1 * LAMPORTS_PER_SOL;
 
-      // Request airdrop
+      // Get airdrop signature
       const signature = await connection.requestAirdrop(publicKey, lamports);
 
-      // Wait for confirmation
-      await connection.confirmTransaction(signature, "confirmed");
+      // Confirm transaction with latest blockhash
+      const latestBlockhash = await connection.getLatestBlockhash();
+      await connection.confirmTransaction(
+        {
+          signature,
+          blockhash: latestBlockhash.blockhash,
+          lastValidBlockHeight: latestBlockhash.lastValidBlockHeight,
+        },
+        "confirmed"
+      );
 
       // Show success toast with explorer link
       toast.success("Airdrop Successful", {
@@ -82,7 +94,7 @@ export default function Faucet() {
       let errorMessage = "Failed to request SOL from faucet";
 
       if (error instanceof Error) {
-        // Check for rate limit errors
+        // Detect rate limit errors
         if (
           error.message.includes("429") ||
           error.message.includes("rate limit")
