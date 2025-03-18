@@ -6,12 +6,12 @@ A **beautiful, minimalist template** for building **Solana-based applications** 
 
 ## ✨ Features
 
-✅ **Wallet Connection** – Connect your Solana wallet (Phantom, Solflare, etc.)
-✅ **Network Selector** – Switch between **Devnet** and **Testnet**
-✅ **SOL Transfer** – Send SOL to another wallet
-✅ **Faucet** – Get **1 SOL** for free on Devnet/Testnet
-✅ **Explorer Links** – View transactions on **Solana Explorer**
-✅ **Dark Mode Support** – Fully responsive and theme-aware
+- **Wallet Connection**: Connect your Solana wallet (Phantom, Solflare, etc.)
+- **Network Selector**: Switch between **Devnet** and **Testnet**
+- **SOL Transfer**: Send SOL to another wallet
+- **Faucet**: Get **1 SOL** for free on Devnet/Testnet
+- **Explorer Links**: View transactions on **Solana Explorer**
+- **Dark Mode Support**: Fully responsive and theme-aware
 
 ---
 
@@ -128,17 +128,6 @@ export const DEFAULT_NETWORK = "devnet";
 
 All styles are managed in **TailwindCSS**.
 Modify styles in **`globals.css`** or **components/ui/**.
-
----
-
-## 🚀 Deployment
-
-Once you're happy with your app, deploy it using **Vercel**:
-
-```sh
-npm run build
-vercel deploy
-```
 
 ---
 
