@@ -158,9 +158,9 @@ export default function TransferSol() {
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto backdrop-blur-sm bg-white/90 dark:bg-black/80 border border-slate-200/50 dark:border-slate-800/50 shadow-soft">
+    <Card className="w-full max-w-md mx-auto backdrop-blur-sm bg-card/50 border border-border/50 shadow-soft">
       <CardHeader>
-        <CardTitle className="text-2xl font-display">Transfer SOL</CardTitle>
+        <CardTitle className="text-2xl">Transfer SOL</CardTitle>
         <CardDescription>Send SOL to another wallet address</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">

@@ -114,13 +114,13 @@ export default function Faucet() {
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto backdrop-blur-sm bg-white/90 dark:bg-black/80 border border-slate-200/50 dark:border-slate-800/50 shadow-soft">
+    <Card className="w-full max-w-md mx-auto backdrop-blur-sm bg-card/50 border border-border/50 shadow-soft">
       <CardHeader>
         <div className="flex items-center justify-between">
-          <CardTitle className="text-2xl font-display">SOL Faucet</CardTitle>
+          <CardTitle className="text-2xl">SOL Faucet</CardTitle>
           <Badge
             variant="outline"
-            className="bg-solana/10 text-solana-dark border-0"
+            className="bg-solana/10 text-solana-light border-0"
           >
             {network.toUpperCase()}
           </Badge>
