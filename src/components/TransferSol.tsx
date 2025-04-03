@@ -10,7 +10,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { useWallet } from "@/hooks/useWallet";
 import { toast } from "sonner";
 import { ArrowRight, Loader2 } from "lucide-react";
 import {
@@ -19,10 +18,14 @@ import {
   parseInputToLamports,
   TransactionError,
 } from "@/lib/solana";
+import { useConnection, useWallet } from "@solana/wallet-adapter-react";
+import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 
 export default function TransferSol() {
-  const { publicKey, wallet, connected, connection, network, refreshBalance } =
-    useWallet();
+  const { publicKey, wallet, connected, sendTransaction } = useWallet();
+
+  const connection = useConnection().connection;
+  const network = WalletAdapterNetwork.Devnet;
 
   const [recipient, setRecipient] = useState("");
   const [amount, setAmount] = useState("");
@@ -106,13 +109,8 @@ export default function TransferSol() {
         lamports
       );
 
-      // Sign transaction
-      const signedTransaction = await wallet.signTransaction(transaction);
-
       // Send transaction
-      const signature = await connection.sendRawTransaction(
-        signedTransaction.serialize()
-      );
+      const signature = await sendTransaction(transaction, connection);
 
       // Wait for confirmation
       await connection.confirmTransaction(signature, "confirmed");
@@ -134,9 +132,6 @@ export default function TransferSol() {
       // Reset form
       setRecipient("");
       setAmount("");
-
-      // Refresh balance
-      refreshBalance();
     } catch (error) {
       console.error("Transfer error:", error);
 

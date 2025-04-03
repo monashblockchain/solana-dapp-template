@@ -1,16 +1,14 @@
 "use client";
 
-import { WalletProvider } from "@/contexts/WalletContext";
-import WalletButton from "@/components/WalletButton";
 import TransferSol from "@/components/TransferSol";
 import Faucet from "@/components/Faucet";
-import NetworkSelector from "@/components/NetworkSelector";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ArrowUpDown, Droplet } from "lucide-react";
+import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 
 export default function Home() {
   return (
-    <WalletProvider>
+    <div>
       <div className="min-h-screen w-full flex flex-col justify-between bg-gradient-to-b from-background via-secondary/80 to-primary/50 overflow-hidden">
         {/* Background gradient elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -26,8 +24,7 @@ export default function Home() {
           </div>
 
           <div className="flex items-center space-x-4">
-            <NetworkSelector />
-            <WalletButton />
+            <WalletMultiButton />
           </div>
         </header>
 
@@ -80,6 +77,6 @@ export default function Home() {
           </p>
         </footer>
       </div>
-    </WalletProvider>
+    </div>
   );
 }
