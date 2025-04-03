@@ -5,6 +5,7 @@ import Faucet from "@/components/Faucet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ArrowUpDown, Droplet } from "lucide-react";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
+import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 
 export default function Home() {
   return (
@@ -24,6 +25,7 @@ export default function Home() {
           </div>
 
           <div className="flex items-center space-x-4">
+            <ThemeSwitcher />
             <WalletMultiButton />
           </div>
         </header>
